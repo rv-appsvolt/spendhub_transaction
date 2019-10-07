@@ -1,0 +1,32 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "testEndpoing.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon testEndpoing.js --ext js,graphql --exec babel-node"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-boost": "^0.4.2",
+    "apollo-cache-inmemory": "^1.6.2",
+    "apollo-client": "^2.6.2",
+    "apollo-link-http": "^1.5.15",
+    "apollo-server": "^2.6.3",
+    "apollo-server-express": "^2.6.3",
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "graphql": "^14.3.1",
+    "graphql-tag": "^2.10.1",
+    "node-fetch": "^2.6.0",
+    "nodemon": "^1.19.2"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0"
+  }
+}
