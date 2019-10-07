@@ -5,7 +5,7 @@ import fetch from "node-fetch";
 var express = require("express");
 
 const client = new ApolloClient({
-  uri: `http://localhost:4000`,
+  uri: `http://35.174.13.67:4000`,
   fetch: fetch
 });
 
