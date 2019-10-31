@@ -5,7 +5,7 @@ import fetch from "node-fetch";
 var express = require("express");
 
 const client = new ApolloClient({
-  uri: `http://35.174.13.67:4000`,
+  uri: `https://demo-api.spendhub.net`,
   fetch: fetch
 });
 
@@ -23,7 +23,7 @@ app.post("/physicalcard", async function(req, res) {
   // Validation of OverBudget/ active user /
 
   let payloadPermission = {};
-
+  console.log(req.body);
   payloadPermission.user = req.body.user_token;
   payloadPermission.amount = req.body.amount;
   payloadPermission.card_token = req.body.card_token;
@@ -93,6 +93,8 @@ app.post("/virtulecard", async function(req, res) {
   payloadPermission.card_token = req.body.card_token;
   payloadPermission.Merchant = req.body.card_acceptor.mid;
 
+  // GET DATA from CARD Table
+  // console.log(payloadPermission);
 
   const permissionGql = gql`
     query getTransactionPermission(
@@ -185,7 +187,11 @@ app.post("/response", async function(req, res) {
   if (data.state == "PENDING") {
     state = true;
   }
-
+  
+  // Temp Ejustment 
+  state = Math.random() < 0.7;
+  console.log('state',state);
+  
   let respx = null;
   if (data.hasOwnProperty("card_acceptor")) {
     console.log("2nd Response received...");
@@ -216,7 +222,7 @@ app.post("/response", async function(req, res) {
   return "true";
 });
 
-var server = app.listen(80, function() {
+var server = app.listen(3000, function() {
   var host = server.address().address;
   var port = server.address().port;
   console.log("SpendHub 2nd endpint http://%s:%s", host, port);
