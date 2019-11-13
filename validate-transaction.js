@@ -1,7 +1,7 @@
 import ApolloClient from "apollo-boost";
 import gql from "graphql-tag";
 import fetch from "node-fetch";
-
+const fs = require('fs');
 var express = require("express");
 
 const client = new ApolloClient({
@@ -15,7 +15,7 @@ app.use(express.json());
 
 // GET method route
 app.get("/", function(req, res) {
-  res.send("You are not authorize to acces this page.");
+  res.send(`You are not authorize to acces this page. File Updated ${fs.statSync('validate-transaction.js').mtime}`);
 });
 
 // POST method route  for Physical Card transaction
@@ -223,7 +223,7 @@ app.post("/response", async function(req, res) {
   return "true";
 });
 
-var server = app.listen(80, function() {
+var server = app.listen(3000, function() {
   var host = server.address().address;
   var port = server.address().port;
   console.log("SpendHub 2nd endpint http://%s:%s", host, port);
