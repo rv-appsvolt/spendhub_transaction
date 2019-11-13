@@ -5,8 +5,10 @@ const fs = require('fs');
 var express = require("express");
 
 const client = new ApolloClient({
+
   // uri: `https://demo-api.spendhub.net`,
   uri: `http://212be41c.ngrok.io`,
+
   fetch: fetch
 });
 
