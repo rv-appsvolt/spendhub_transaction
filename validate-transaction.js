@@ -5,7 +5,8 @@ import fetch from "node-fetch";
 var express = require("express");
 
 const client = new ApolloClient({
-  uri: `https://demo-api.spendhub.net`,
+  // uri: `https://demo-api.spendhub.net`,
+  uri: `http://212be41c.ngrok.io`,
   fetch: fetch
 });
 
@@ -222,7 +223,7 @@ app.post("/response", async function(req, res) {
   return "true";
 });
 
-var server = app.listen(3000, function() {
+var server = app.listen(80, function() {
   var host = server.address().address;
   var port = server.address().port;
   console.log("SpendHub 2nd endpint http://%s:%s", host, port);
