@@ -6,10 +6,17 @@ var express = require("express");
 
 const client = new ApolloClient({
 
-  // uri: `https://demo-api.spendhub.net`,
-  uri: `http://212be41c.ngrok.io`,
-
-  fetch: fetch
+  uri: `https://demo-api.spendhub.net:4443`,
+  // uri: `http://212be41c.ngrok.io`,
+  // uri: `http://localhost:4000`,
+  fetch: fetch,
+  request: (operation) => {
+    operation.setContext({
+      headers: {
+        authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJkZWZhdWx0QGRlZmF1bHQiLCJyb2xlcyI6WyJhZG1pbiJdfSwiaWF0IjoxNTczNzM4NjQzLCJleHAiOjE1NzQzNDM0NDN9.CC1VX_epmr6iIxyn0-iAeDTdgMo8j_F6UOjajotgjss"
+      }
+    });
+  }
 });
 
 var app = express();
@@ -162,6 +169,7 @@ app.post("/response", async function(req, res) {
   // console.log("---------------------------");
   const find = gql`
     mutation TEST(
+      $marqetaTransactionId: String!
       $title: String #here Title is Customer Name
       $user_token: String
       $token: String
@@ -172,6 +180,7 @@ app.post("/response", async function(req, res) {
     ) {
       transections(
         data: {
+          marqetaTransactionId: $marqetaTransactionId,
           title: $title
           user_token: $user_token
           token: $token
@@ -191,8 +200,7 @@ app.post("/response", async function(req, res) {
     state = true;
   }
   
-  // Temp Ejustment 
-  state = Math.random() < 0.7;
+  // state = Math.random() < 0.7;
   console.log('state',state);
   
   let respx = null;
@@ -204,6 +212,7 @@ app.post("/response", async function(req, res) {
       .mutate({
         mutation: find,
         variables: {
+          marqetaTransactionId: data.token,
           user_token: data.user_token,
           token: data.token,
           user_transaction_time: data.user_transaction_time,
