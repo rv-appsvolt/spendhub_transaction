@@ -7,13 +7,13 @@ var express = require("express");
 const client = new ApolloClient({
 
   uri: `https://demo-api.spendhub.net:4443`,
-  // uri: `http://212be41c.ngrok.io`,
+  // uri: `http://cc5e45de.ngrok.io`,
   // uri: `http://localhost:4000`,
   fetch: fetch,
   request: (operation) => {
     operation.setContext({
       headers: {
-        authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJkZWZhdWx0QGRlZmF1bHQiLCJyb2xlcyI6WyJhZG1pbiJdfSwiaWF0IjoxNTczNzM4NjQzLCJleHAiOjE1NzQzNDM0NDN9.CC1VX_epmr6iIxyn0-iAeDTdgMo8j_F6UOjajotgjss"
+        authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJkZWZhdWx0QGRlZmF1bHQiLCJyb2xlcyI6WyJhZG1pbiJdfSwiaWF0IjoxNTc0NjgxNTM3LCJleHAiOjE1NzUyODYzMzd9.elVK5NHjsvU0rk1iY9X559ZUBnKKTmsyQeohxKd9mQI"
       }
     });
   }
@@ -24,7 +24,8 @@ app.use(express.json());
 
 // GET method route
 app.get("/", function(req, res) {
-  res.send(`You are not authorize to acces this page. File Updated ${fs.statSync('validate-transaction.js').mtime}`);
+  res.status(200).send(`You are not authorize to access this page1. \n File Updated ${fs.statSync('validate-transaction.js').mtime}`);
+  // res.send
 });
 
 // POST method route  for Physical Card transaction
@@ -46,7 +47,7 @@ app.post("/physicalcard", async function(req, res) {
       $card_token: String
       $Merchant: String
     ) {
-      gettransactionPermForPhysicalcard(
+      getTransactionPermForPhysicalcard(
         data: {
           user: $user
           amount: $amount
@@ -84,7 +85,7 @@ app.post("/physicalcard", async function(req, res) {
 
   // console.log("Request received. Sending" + respx.data.gettransactionPerm.text);
   res.setHeader("Content-Type", "application/json");
-  res.status(respx.data.gettransactionPermForPhysicalcard.text);
+  res.status(respx.data.getTransactionPermForPhysicalcard.text);
   res.send({
     jit_funding: resp
   });
@@ -113,7 +114,7 @@ app.post("/virtulecard", async function(req, res) {
       $card_token: String
       $Merchant: String
     ) {
-      gettransactionPerm(
+      getTransactionPermForVirtualcard(
         data: {
           user: $user
           amount: $amount
@@ -154,7 +155,7 @@ app.post("/virtulecard", async function(req, res) {
 
   // console.log("Request received. Sending" + respx.data.gettransactionPerm.text);
   res.setHeader("Content-Type", "application/json");
-  res.status(respx.data.gettransactionPerm.text);
+  res.status(respx.data.getTransactionPermForVirtualcard.text);
   res.send({
     jit_funding: resp
   });
@@ -178,7 +179,7 @@ app.post("/response", async function(req, res) {
       $user_transaction_time: String
       $ImpacktedAmount: Float
     ) {
-      transections(
+      transaction(
         data: {
           marqetaTransactionId: $marqetaTransactionId,
           title: $title
