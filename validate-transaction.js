@@ -6,7 +6,8 @@ var express = require("express");
 
 const client = new ApolloClient({
 
-  uri: `https://demo-api.spendhub.net:4443`,
+  // uri: `https://demo-api.spendhub.net:4443`,
+  uri: `https://staging-api.spendhub.net:4443/`,
   // uri: `http://cc5e45de.ngrok.io`,
   // uri: `http://localhost:4000`,
   fetch: fetch,
