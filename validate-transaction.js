@@ -3,6 +3,11 @@ import gql from "graphql-tag";
 import fetch from "node-fetch";
 const fs = require('fs');
 var express = require("express");
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+let uri =  process.env.API_URI;
 
 const client = new ApolloClient({
 
@@ -240,4 +245,5 @@ var server = app.listen(3000, function() {
   var host = server.address().address;
   var port = server.address().port;
   console.log("SpendHub 2nd endpint http://%s:%s", host, port);
+  console.log("connected API URL:",uri);
 });
