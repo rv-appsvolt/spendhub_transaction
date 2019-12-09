@@ -167,7 +167,12 @@ app.post("/virtulecard", async function(req, res) {
   });
 });
 
+
 app.post("/response", async function(req, res) {
+	console.log(req.body);
+});
+
+app.post("/response2", async function(req, res) {
   console.log("reponse...");
   var data = JSON.stringify(req.body.transactions);
   data = JSON.parse(data)[0];
