@@ -12,7 +12,8 @@ let uri =  process.env.API_URI;
 const client = new ApolloClient({
 
   // uri: `https://demo-api.spendhub.net:4443`,
-  uri: `https://staging-api.spendhub.net:4443/`,
+  // uri: `https://staging-api.spendhub.net:4443/`,
+  uri,
   // uri: `http://cc5e45de.ngrok.io`,
   // uri: `http://localhost:4000`,
   fetch: fetch,
@@ -172,8 +173,8 @@ app.post("/response", async function(req, res) {
 	console.log(req.body);
 });
 
-app.post("/response2", async function(req, res) {
-  console.log("reponse...");
+app.post("/acknowledgment", async function(req, res) {
+  console.log("acknowledgment...");
   var data = JSON.stringify(req.body.transactions);
   data = JSON.parse(data)[0];
   // console.log("---------------------------");
