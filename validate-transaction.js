@@ -13,8 +13,8 @@ const client = new ApolloClient({
 
   // uri: `https://demo-api.spendhub.net:4443`,
   // uri: `https://staging-api.spendhub.net:4443/`,
-  uri,
-  // uri: `http://cc5e45de.ngrok.io`,
+  // uri,
+  uri: ` http://5deb450b.ngrok.io`,
   // uri: `http://localhost:4000`,
   fetch: fetch,
   request: (operation) => {
@@ -31,97 +31,162 @@ app.use(express.json());
 
 // GET method route
 app.get("/", function(req, res) {
-  res.status(200).send(`You are not authorize to access this page1. \n File Updated ${fs.statSync('validate-transaction.js').mtime}`);
+  res.status(200).send(`You are not authorize to access this page2. \n File Updated ${fs.statSync('validate-transaction.js').mtime}`);
   // res.send
 });
 
 // POST method route  for Physical Card transaction
-app.post("/physicalcard", async function(req, res) {
-  console.log("INQUIRY RECEIVED for Physical card.");
-  // Validation of OverBudget/ active user /
+// app.post("/physicalcard", async function(req, res) {
+//   console.log("INQUIRY RECEIVED for Physical card.");
+//   // Validation of OverBudget/ active user /
+
+//   let payloadPermission = {};
+//   console.log(req.body);
+//   payloadPermission.user = req.body.user_token;
+//   payloadPermission.amount = req.body.amount;
+//   payloadPermission.card_token = req.body.card_token;
+//   payloadPermission.Merchant = req.body.card_acceptor.mid;
+
+//   const permissionGql = gql`
+//     query GettransactionPermForPhysicalcard(
+//       $user: String
+//       $amount: Float
+//       $card_token: String
+//       $Merchant: String
+//     ) {
+//       getTransactionPermForPhysicalcard(
+//         data: {
+//           user: $user
+//           amount: $amount
+//           card_token: $card_token
+//           Merchant: $Merchant
+//         }
+//       ) {
+//         text
+//       }
+//     }
+//   `;
+
+//   let respx = null;
+
+//   await client
+//     .query({
+//       query: permissionGql,
+//       variables: {
+// 	user:payloadPermission.user,
+// 	amount: payloadPermission.amount,
+// 	card_token: payloadPermission.card_token,
+// 	Merchant: payloadPermission.Merchant,
+//       },
+//       fetchPolicy: "network-only"
+//     })
+//     .then(resp => (respx = resp));
+//   console.log(respx);
+//   let resp = {};
+
+//   resp["token"] = req.body.gpa_order.jit_funding.token;
+//   resp["method"] = req.body.gpa_order.jit_funding.method;
+//   resp["user_token"] = req.body.gpa_order.jit_funding.user_token;
+//   resp["amount"] = req.body.gpa_order.jit_funding.amount;
+//   resp["original_jit_funding_token"] = req.body.gpa_order.jit_funding.token;
+
+//   // console.log("Request received. Sending" + respx.data.gettransactionPerm.text);
+//   res.setHeader("Content-Type", "application/json");
+//   res.status(respx.data.getTransactionPermForPhysicalcard.text);
+//   res.send({
+//     jit_funding: resp
+//   });
+// });
+
+// // POST method route virtulecard
+// app.post("/virtulecard", async function(req, res) {
+//   console.log("INQUIRY RECEIVED for Virtule card.");
+//   console.log(req.body);
+
+
+//   let payloadPermission = {};
+
+//   payloadPermission.user = req.body.user_token;
+//   payloadPermission.amount = req.body.amount;
+//   payloadPermission.card_token = req.body.card_token;
+//   payloadPermission.Merchant = req.body.card_acceptor.mid;
+
+//   // GET DATA from CARD Table
+//   // console.log(payloadPermission);
+
+//   const permissionGql = gql`
+//     query getTransactionPermission(
+//       $user: String
+//       $amount: Float
+//       $card_token: String
+//       $Merchant: String
+//     ) {
+//       getTransactionPermForVirtualcard(
+//         data: {
+//           user: $user
+//           amount: $amount
+//           card_token: $card_token
+//           Merchant: $Merchant
+//         }
+//       ) {
+//         text
+//       }
+//     }
+//   `;
+
+//   let respx = null;
+
+//   await client
+//     .query({
+//       query: permissionGql,
+//       variables: {
+//         user:payloadPermission.user,
+// 	amount: payloadPermission.amount,
+// 	card_token: payloadPermission.card_token,
+// 	Merchant: payloadPermission.Merchant,
+//       },
+//       fetchPolicy: "network-only"
+//     })
+//     .then(resp => (respx = resp));
+
+//   // console.log("------");
+//   // console.log(respx);
+//   // console.log("------");
+
+//   let resp = {};
+//   resp["token"] = req.body.gpa_order.jit_funding.token;
+//   resp["method"] = req.body.gpa_order.jit_funding.method;
+//   resp["user_token"] = req.body.gpa_order.jit_funding.user_token;
+//   resp["amount"] = req.body.gpa_order.jit_funding.amount;
+//   resp["original_jit_funding_token"] = req.body.gpa_order.jit_funding.token;
+
+//   // console.log("Request received. Sending" + respx.data.gettransactionPerm.text);
+//   res.setHeader("Content-Type", "application/json");
+//   res.status(respx.data.getTransactionPermForVirtualcard.text);
+//   res.send({
+//     jit_funding: resp
+//   });
+// });
+
+
+app.post("/response", async function(req, res) {
 
   let payloadPermission = {};
-  console.log(req.body);
+  
   payloadPermission.user = req.body.user_token;
   payloadPermission.amount = req.body.amount;
   payloadPermission.card_token = req.body.card_token;
   payloadPermission.Merchant = req.body.card_acceptor.mid;
 
-  const permissionGql = gql`
-    query GettransactionPermForPhysicalcard(
+
+    const permissionGql = gql`
+    query inquiryAboutTransaction(
       $user: String
       $amount: Float
       $card_token: String
       $Merchant: String
     ) {
-      getTransactionPermForPhysicalcard(
-        data: {
-          user: $user
-          amount: $amount
-          card_token: $card_token
-          Merchant: $Merchant
-        }
-      ) {
-        text
-      }
-    }
-  `;
-
-  let respx = null;
-
-  await client
-    .query({
-      query: permissionGql,
-      variables: {
-	user:payloadPermission.user,
-	amount: payloadPermission.amount,
-	card_token: payloadPermission.card_token,
-	Merchant: payloadPermission.Merchant,
-      },
-      fetchPolicy: "network-only"
-    })
-    .then(resp => (respx = resp));
-  console.log(respx);
-  let resp = {};
-
-  resp["token"] = req.body.gpa_order.jit_funding.token;
-  resp["method"] = req.body.gpa_order.jit_funding.method;
-  resp["user_token"] = req.body.gpa_order.jit_funding.user_token;
-  resp["amount"] = req.body.gpa_order.jit_funding.amount;
-  resp["original_jit_funding_token"] = req.body.gpa_order.jit_funding.token;
-
-  // console.log("Request received. Sending" + respx.data.gettransactionPerm.text);
-  res.setHeader("Content-Type", "application/json");
-  res.status(respx.data.getTransactionPermForPhysicalcard.text);
-  res.send({
-    jit_funding: resp
-  });
-});
-
-// POST method route virtulecard
-app.post("/virtulecard", async function(req, res) {
-  console.log("INQUIRY RECEIVED for Virtule card.");
-  console.log(req.body);
-  // Validation Merchan type/ Budget / aprove or decline transections here.
-
-  let payloadPermission = {};
-
-  payloadPermission.user = req.body.user_token;
-  payloadPermission.amount = req.body.amount;
-  payloadPermission.card_token = req.body.card_token;
-  payloadPermission.Merchant = req.body.card_acceptor.mid;
-
-  // GET DATA from CARD Table
-  // console.log(payloadPermission);
-
-  const permissionGql = gql`
-    query getTransactionPermission(
-      $user: String
-      $amount: Float
-      $card_token: String
-      $Merchant: String
-    ) {
-      getTransactionPermForVirtualcard(
+      inquiryAboutTransaction(
         data: {
           user: $user
           amount: $amount
@@ -141,9 +206,9 @@ app.post("/virtulecard", async function(req, res) {
       query: permissionGql,
       variables: {
         user:payloadPermission.user,
-	amount: payloadPermission.amount,
-	card_token: payloadPermission.card_token,
-	Merchant: payloadPermission.Merchant,
+        amount: payloadPermission.amount,
+        card_token: payloadPermission.card_token,
+        Merchant: payloadPermission.Merchant,
       },
       fetchPolicy: "network-only"
     })
@@ -153,24 +218,20 @@ app.post("/virtulecard", async function(req, res) {
   // console.log(respx);
   // console.log("------");
 
-  let resp = {};
-  resp["token"] = req.body.gpa_order.jit_funding.token;
-  resp["method"] = req.body.gpa_order.jit_funding.method;
-  resp["user_token"] = req.body.gpa_order.jit_funding.user_token;
-  resp["amount"] = req.body.gpa_order.jit_funding.amount;
-  resp["original_jit_funding_token"] = req.body.gpa_order.jit_funding.token;
+//   let resp = {};
+//   resp["token"] = req.body.gpa_order.jit_funding.token;
+//   resp["method"] = req.body.gpa_order.jit_funding.method;
+//   resp["user_token"] = req.body.gpa_order.jit_funding.user_token;
+//   resp["amount"] = req.body.gpa_order.jit_funding.amount;
+//   resp["original_jit_funding_token"] = req.body.gpa_order.jit_funding.token;
 
-  // console.log("Request received. Sending" + respx.data.gettransactionPerm.text);
-  res.setHeader("Content-Type", "application/json");
-  res.status(respx.data.getTransactionPermForVirtualcard.text);
-  res.send({
-    jit_funding: resp
-  });
-});
+//   // console.log("Request received. Sending" + respx.data.gettransactionPerm.text);
+//   res.setHeader("Content-Type", "application/json");
+//   res.status(respx.data.getTransactionPermForVirtualcard.text);
+//   res.send({
+//     jit_funding: resp
+//   });
 
-
-app.post("/response", async function(req, res) {
-	console.log(req.body);
 });
 
 app.post("/acknowledgment", async function(req, res) {
