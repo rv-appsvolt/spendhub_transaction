@@ -31,7 +31,7 @@ app.use(express.json());
 
 // GET method route
 app.get("/", function(req, res) {
-  res.status(200).send(`You are not authorize to access this page2. \n File Updated ${fs.statSync('validate-transaction.js').mtime}`);
+  res.status(200).send(`You are not authorize to access this page3. \n File Updated ${fs.statSync('validate-transaction.js').mtime}`);
   // res.send
 });
 
