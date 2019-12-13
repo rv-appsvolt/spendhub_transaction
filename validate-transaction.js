@@ -31,7 +31,7 @@ app.use(express.json());
 
 // GET method route
 app.get("/", function(req, res) {
-  res.status(200).send(`You are not authorize to access this page3. \n File Updated ${fs.statSync('validate-transaction.js').mtime}`);
+  res.status(200).send(`You are not authorize to access this page4. \n File Updated ${fs.statSync('validate-transaction.js').mtime}`);
   // res.send
 });
 
@@ -91,9 +91,9 @@ app.post("/response", async function(req, res) {
   resp["amount"] = req.body.gpa_order.jit_funding.amount;
   resp["original_jit_funding_token"] = req.body.gpa_order.jit_funding.token;
 
-  // console.log("Request received. Sending" + respx.data.gettransactionPerm.text);
+  
   res.setHeader("Content-Type", "application/json");
-  res.status(respx.data.getTransactionPermForVirtualcard.text);
+  res.status(respx.data.inquiryAboutTransaction.text);
   res.send({
     jit_funding: resp
   });
