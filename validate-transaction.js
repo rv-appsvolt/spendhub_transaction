@@ -13,8 +13,8 @@ const client = new ApolloClient({
 
   // uri: `https://demo-api.spendhub.net:4443`,
   // uri: `https://staging-api.spendhub.net:4443/`,
-  // uri,
-  uri: ` http://5deb450b.ngrok.io`,
+  uri,
+  // uri: ` http://5deb450b.ngrok.io`,
   // uri: `http://localhost:4000`,
   fetch: fetch,
   request: (operation) => {
@@ -100,7 +100,7 @@ app.post("/response", async function(req, res) {
 
 });
 
-app.post("/acknowledgment", async function(req, res) {
+app.post("/acknowledgment1", async function(req, res) {
   console.log("acknowledgment...");
   var data = JSON.stringify(req.body.transactions);
   data = JSON.parse(data)[0];
