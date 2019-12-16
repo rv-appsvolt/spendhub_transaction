@@ -37,7 +37,6 @@ app.get("/", function(req, res) {
 
 app.post("/response", async function(req, res) {
   console.log('response');
-  
 
   let payloadPermission = {};
   
