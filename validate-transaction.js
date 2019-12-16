@@ -36,6 +36,8 @@ app.get("/", function(req, res) {
 });
 
 app.post("/response", async function(req, res) {
+  console.log('response');
+  
 
   let payloadPermission = {};
   
@@ -100,7 +102,7 @@ app.post("/response", async function(req, res) {
 
 });
 
-app.post("/acknowledgment1", async function(req, res) {
+app.post("/acknowledgment", async function(req, res) {
   console.log("acknowledgment...");
   var data = JSON.stringify(req.body.transactions);
   data = JSON.parse(data)[0];
