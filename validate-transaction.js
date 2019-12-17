@@ -10,12 +10,9 @@ dotenv.config();
 let uri =  process.env.API_URI;
 
 const client = new ApolloClient({
-
-  // uri: `https://demo-api.spendhub.net:4443`,
-  // uri: `https://staging-api.spendhub.net:4443/`,
-  uri,
-  // uri: ` http://5deb450b.ngrok.io`,
-  // uri: `http://localhost:4000`,
+  
+  uri: `https://078ab386.ngrok.io`,
+  
   fetch: fetch,
   request: (operation) => {
     operation.setContext({
@@ -62,6 +59,7 @@ app.post("/response", async function(req, res) {
         }
       ) {
         text
+        note
       }
     }
   `;
@@ -94,7 +92,7 @@ app.post("/response", async function(req, res) {
 
   
   res.setHeader("Content-Type", "application/json");
-  res.status(respx.data.inquiryAboutTransaction.text);
+  res.status(respx.data.inquiryAboutTransaction);
   res.send({
     jit_funding: resp
   });
